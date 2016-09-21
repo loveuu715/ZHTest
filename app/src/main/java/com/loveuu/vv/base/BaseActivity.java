@@ -30,10 +30,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         //不能竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         this.mContext = this;
-        mUnbinder = ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         getIntentData();
         setContentView(bindLayout());
+        mUnbinder = ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         init();
     }
 
