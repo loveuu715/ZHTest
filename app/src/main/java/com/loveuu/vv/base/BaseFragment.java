@@ -13,9 +13,6 @@ import com.loveuu.vv.base.eventbus.EventObject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by VV on 2016/9/21.
  */
@@ -24,7 +21,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected Context mContext;
     protected View mView;
-    private Unbinder mUnbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +33,6 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
             mView = inflater.inflate(bindLayout(), null);
-            mUnbinder = ButterKnife.bind(this, mView);
             EventBus.getDefault().register(this);
             init();
         }
@@ -54,8 +49,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mUnbinder != null)
-            mUnbinder.unbind();
         EventBus.getDefault().unregister(this);
     }
 }

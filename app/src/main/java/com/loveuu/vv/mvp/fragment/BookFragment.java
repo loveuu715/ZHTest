@@ -21,9 +21,7 @@ public class BookFragment extends BaseFragment {
     }
 
     public static BookFragment newInstance(String tag) {
-
         Bundle args = new Bundle();
-
         BookFragment fragment = new BookFragment();
         fragment.setArguments(args);
         return fragment;

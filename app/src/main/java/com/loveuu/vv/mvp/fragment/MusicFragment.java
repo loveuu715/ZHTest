@@ -21,9 +21,7 @@ public class MusicFragment extends BaseFragment {
     }
 
     public static MusicFragment newInstance(String tag) {
-
         Bundle args = new Bundle();
-
         MusicFragment fragment = new MusicFragment();
         fragment.setArguments(args);
         return fragment;

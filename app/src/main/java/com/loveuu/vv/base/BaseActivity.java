@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.loveuu.vv.R;
 import com.loveuu.vv.base.eventbus.EventObject;
+import com.loveuu.vv.utils.ActivityManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager.getInstances().activityEnqueue(this);
         //不能竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         this.mContext = this;
@@ -42,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void init();
 
     @Subscribe
-    public void onEvent(EventObject obj) {
+    public void onEvent(EventObject eo) {
     }
 
     public void getIntentData() {
@@ -54,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         //TODO 自定义界面关闭动画
+        overridePendingTransition(0, R.anim.b_exit_anim);
     }
 
     /**

@@ -1,46 +1,54 @@
 package com.loveuu.vv;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
+import android.support.v7.app.AppCompatActivity;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.loveuu.vv.base.BaseActivity;
+import com.loveuu.vv.base.eventbus.EventObject;
 import com.loveuu.vv.mvp.fragment.BookFragment;
 import com.loveuu.vv.mvp.fragment.GameFragment;
 import com.loveuu.vv.mvp.fragment.HomeFragment;
 import com.loveuu.vv.mvp.fragment.MusicFragment;
+import com.loveuu.vv.utils.ActivityManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottomNavigationBar;
-    @BindView(R.id.main_layFrame)
-    FrameLayout mFrameLayout;
 
     private ArrayList<Fragment> fragments;
-
+    private Unbinder mUnbinder;
 
     @Override
-    public int bindLayout() {
-        return R.layout.activity_main;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mUnbinder = ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+        init();
     }
 
-    @Override
     public void init() {
-
-        bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
-//        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+//        bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
 //        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.homelan, "首页")
-                        .setActiveColorResource(R.color.main_home_color))
+                .setActiveColorResource(R.color.main_home_color))
                 .addItem(new BottomNavigationItem(R.mipmap.houselan, "房源")
                         .setActiveColorResource(R.color.main_house_color))
                 .addItem(new BottomNavigationItem(R.mipmap.tongxunlan, "联系人")
@@ -60,9 +68,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(HomeFragment.newInstance("Home"));
-        fragments.add(BookFragment.newInstance("Books"));
-        fragments.add(MusicFragment.newInstance("Music"));
-        fragments.add(GameFragment.newInstance("Games"));
+        fragments.add(BookFragment.newInstance("House"));
+        fragments.add(MusicFragment.newInstance("Contract"));
+        fragments.add(GameFragment.newInstance("Center"));
         return fragments;
     }
 
@@ -74,6 +82,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.main_layFrame, HomeFragment.newInstance("Home"));
         transaction.commit();
+    }
+
+    @Subscribe
+    public void onEvent(EventObject eo){
+    }
+
+    @Override
+    public void onBackPressed() {
+        ActivityManager.getInstances().finishAll();
+        super.onBackPressed();
     }
 
     @Override
@@ -109,5 +127,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onTabReselected(int position) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnbinder != null)
+            mUnbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -3,12 +3,18 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@android:color/white"
+              android:clickable="true"
               android:orientation="vertical">
 
-    <TextView
+    <include layout="@layout/house_toolbar"/>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="music"
-        android:textSize="20sp"/>
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/toolbar_dropshadow"/>
+    </FrameLayout>
 </LinearLayout>

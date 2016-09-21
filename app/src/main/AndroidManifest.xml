@@ -2,17 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.loveuu.vv">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MainAppTheme">
+
+        <!-- 启动页 -->
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppStartLoad">
+            android:theme="@style/SplashTheme">
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,7 +27,27 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+
+        <!-- 主界面 -->
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_main"
+            android:launchMode="singleTask"
+            ></activity>
+
+        <!-- 设置界面 -->
+        <activity
+            android:name=".mvp.activity.SettingActivity"
+            android:label="@string/title_setting"
+            android:launchMode="singleTask"
+            ></activity>
+
+        <!-- 我的消息 -->
+        <activity
+            android:name=".mvp.activity.MessageActivity"
+            android:label="@string/title_message"
+            android:launchMode="singleTop"
+            ></activity>
     </application>
 
 </manifest>
