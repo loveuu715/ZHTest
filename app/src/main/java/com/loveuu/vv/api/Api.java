@@ -1,7 +1,5 @@
 package com.loveuu.vv.api;
 
-import com.loveuu.vv.app.UserManager;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,7 +16,7 @@ public class Api {
 
 
     public static <T> void getBannerList(final String adcode, final ICallback<T> callback) {
-        applySchedulers(API_SERVICE.getBannerList(UserManager.TOKEN, UserManager.KEY, adcode), callback);
+//        applySchedulers(API_SERVICE.getBannerList(UserManager.TOKEN, UserManager.KEY, adcode), callback);
     }
 
     public static <T> Observable<T> applySchedulers(Observable<T> responseObservable, ICallback<T> callback) {
