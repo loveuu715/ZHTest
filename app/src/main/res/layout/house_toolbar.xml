@@ -28,10 +28,10 @@
         android:id="@+id/iv_house_toolbar_right1"
         android:layout_width="48dp"
         android:layout_height="match_parent"
-        android:padding="13dp"
-        android:src="@mipmap/add_house_source_icon"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/iv_house_toolbar_right"
-        android:layout_toStartOf="@+id/iv_house_toolbar_right"/>
+        android:layout_toStartOf="@+id/iv_house_toolbar_right"
+        android:padding="13dp"
+        android:src="@mipmap/add_house_source_icon"/>
 
 </RelativeLayout>

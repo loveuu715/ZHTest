@@ -9,17 +9,22 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.loveuu.vv.api.Api;
+import com.loveuu.vv.api.BannerListBean;
+import com.loveuu.vv.api.ICallback;
 import com.loveuu.vv.base.eventbus.EventObject;
 import com.loveuu.vv.mvp.fragment.BookFragment;
 import com.loveuu.vv.mvp.fragment.GameFragment;
 import com.loveuu.vv.mvp.fragment.HomeFragment;
 import com.loveuu.vv.mvp.fragment.MusicFragment;
 import com.loveuu.vv.utils.ActivityManager;
+import com.loveuu.vv.utils.ThreadManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +68,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         fragments = getFragments();
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
+
+        ThreadManager.execute(new Runnable() {
+            @Override
+            public void run() {
+                Api.getBannerList("440300", new ICallback<List<BannerListBean>>() {
+                    @Override
+                    public void onSuccess(List<BannerListBean> result) {
+
+                    }
+
+                    @Override
+                    public void onError(int errorCode, String errorMsg) {
+
+                    }
+                });
+
+//                HomeApiS homeApi = ApiSe.getService(HomeApiS.class);
+//                homeApi.getBannerList("f201ccd908560ea9fe287e3d08379863", "rA21VeE8347bScsuIDNq", "440300");
+
+            }
+        });
     }
 
     private ArrayList<Fragment> getFragments() {
@@ -85,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     @Subscribe
-    public void onEvent(EventObject eo){
+    public void onEvent(EventObject eo) {
     }
 
     @Override

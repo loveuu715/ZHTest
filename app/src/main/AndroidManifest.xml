@@ -48,6 +48,12 @@
             android:label="@string/title_message"
             android:launchMode="singleTop"
             ></activity>
+
+        <!-- 选择城市 -->
+        <activity
+            android:name=".widget.citypicker.CityPickerActivity"
+            android:launchMode="singleTop"
+            ></activity>
     </application>
 
 </manifest>
